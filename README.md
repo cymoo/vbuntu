@@ -20,8 +20,6 @@ Out of the box, it has:
 
 * SDKMAN: a tool for managing parallel versions of Java, Kotlin, Gradle, etc...
 
-* Nginx (1.15) with some better default configuration files
-
 * GCC: compilers
 
 * Clang: a better compiler
