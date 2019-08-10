@@ -1,5 +1,13 @@
 export PATH=/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin
 
+if [ -e /usr/local/node ]; then
+    export PATH=/usr/local/node/bin:$PATH
+fi
+
+if [ -e /usr/local/jdk ]; then
+    export PATH=/usr/local/jdk/bin:$PATH
+fi
+
 ### ALIASES ###
 
 alias rm='rm -i'
@@ -64,5 +72,6 @@ fi
 ### ZSH ###
 
 if [[ -n "${ZSH_VERSION}" ]]; then
-    :
+    HIST_STAMPS="yyyy-mm-dd"
+    export LANG=zh_CN.UTF-8
 fi

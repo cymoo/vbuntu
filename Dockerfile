@@ -4,54 +4,59 @@ LABEL maintainer "Zhang Jie <me@daydream.site>"
 
 WORKDIR /root
 
+ARG NODE_VERSION="v10.16.2"
+ARG JDK_VERSION="12.0.2"
+ARG JDK_URL="https://download.java.net/java/GA/jdk12.0.2/e482c34c86bd4bf8b56c0b35558996b9/10/GPL/openjdk-12.0.2_linux-x64_bin.tar.gz"
+
+ARG SHARED_DIR=/root/share
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 ARG TZ="Asia/Shanghai"
 ENV TZ ${TZ}
 
 RUN apt-get update \
-    # manual, https://github.com/tianon/docker-brew-ubuntu-core/issues/122
-    && echo 'install manual...' \ 
+    # unminimize, https://github.com/tianon/docker-brew-ubuntu-core/issues/122
     && yes | unminimize \
     && apt-get install -y man-db \
     # apt-utils
-    && echo 'install apt-utils...' \ 
     && apt-get install -y apt-utils \
     # config time zone
-    && echo 'config time zone...' \
     && apt-get install -y tzdata \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     # downloaders
-    && echo 'install downloaders: wget, curl, axel...' \ 
     && apt-get install -y wget curl axel \
     # common tools
-    && echo 'install common tools: net-tools, ping, htop, tree, zip, locate...' \
     && apt-get install -y net-tools iputils-ping htop tree zip locate \
     # dev tools
-    && echo 'install dev tools: make, cmake, git, sqlite3...' \
     && apt-get install -y make cmake git sqlite3 \
-    # zsh
-    && echo 'install zsh and oh-my-zsh...' \
+    # zsh, oh-my-zsh
     && apt-get install -y zsh \
     && sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended \
     # vim
     && apt-get install -y vim \
-    # Python
-    && echo 'install python3, python3-dev, pip...' \
+    # Python, pip
     && apt-get install -y python3 python3-dev python3-pip \
-    # Node.js
-    && echo 'install nodejs...' \
-    # Java
     # clean cache
-    && echo 'clean cache...' \
     && rm -rf /var/lib/apt/lists/*
 
-# common python modules
-# RUN pip3 install ipython httpie tldr
+# install nodejs manually
+RUN cd /usr/local \
+    && wget -O - https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz | tar xJf - \
+    && ln -sf node-${NODE_VERSION}-linux-x64 node
 
-# youCompleteMe 
-# RUN ...
+# install java manually
+RUN cd /usr/local \
+    && wget -O - ${JDK_URL} | tar xzf - \
+    && ln -sf jdk-${JDK_VERSION} jdk
+
+# common python modules
+RUN pip3 install ipython httpie tldr
+
+# config vim
+RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 
 COPY rc/.gitconfig /root
 
@@ -59,7 +64,8 @@ COPY rc/.vimrc /root
 
 COPY rc/.bash_profile /root
 RUN echo '. ~/.bash_profile' >> /root/.bashrc
+RUN echo '. ~/.bash_profile' >> /root/.zshrc
 
-VOLUME [ "/root/data" ]
+VOLUME [ "${SHARED_DIR}" ]
 
 CMD [ "/usr/bin/zsh" ]
