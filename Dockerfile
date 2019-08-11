@@ -23,23 +23,23 @@ RUN apt-get update \
     # unminimize, https://github.com/tianon/docker-brew-ubuntu-core/issues/122
     && yes | unminimize \
     # RTFM
-    && apt-get install man-db \
+    && apt-get install -y man-db \
     # apt-utils
-    && apt-get install apt-utils \
+    && apt-get install -y apt-utils \
     # tzdata 
-    && apt-get install tzdata \
+    && apt-get install -y tzdata \
     # downloaders
-    && apt-get install wget curl axel \
+    && apt-get install -y wget curl axel \
     # common tools
-    && apt-get install net-tools iputils-ping htop tree zip locate \
+    && apt-get install -y net-tools iputils-ping htop tree zip locate \
     # dev tools
-    && apt-get install build-essential make cmake git sqlite3 \
+    && apt-get install -y build-essential make cmake git sqlite3 \
     # zsh
-    && apt-get install zsh \
+    && apt-get install -y zsh \
     # vim
-    && apt-get install vim \
+    && apt-get install -y vim \
     # Python, pip
-    && apt-get install python python-dev python-pip python3 python3-dev python3-pip \
+    && apt-get install -y python python-dev python-pip python3 python3-dev python3-pip \
     # clean cache
     && rm -rf /var/lib/apt/lists/*
 
