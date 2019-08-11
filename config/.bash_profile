@@ -1,13 +1,3 @@
-export PATH=/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin
-
-if [ -e /usr/local/node ]; then
-    export PATH=/usr/local/node/bin:$PATH
-fi
-
-if [ -e /usr/local/jdk ]; then
-    export PATH=/usr/local/jdk/bin:$PATH
-fi
-
 ### ALIASES ###
 
 alias rm='rm -i'
@@ -52,12 +42,10 @@ function extract () {
     fi
 }
 
-
 ### BASH ###
 
 if [[ -n "${BASH_VERSION}" ]]; then
-    # check the window size after each command and, if necessary,
-    # update the values of LINES and COLUMNS.
+    # check the window size after each command and if necessary, update the values of LINES and COLUMNS
     shopt -s checkwinsize
     shopt -s histappend
 
@@ -73,5 +61,14 @@ fi
 
 if [[ -n "${ZSH_VERSION}" ]]; then
     HIST_STAMPS="yyyy-mm-dd"
-    export LANG=zh_CN.UTF-8
+fi
+
+### PATH ###
+
+if [ -e /usr/local/node ]; then
+    export PATH=/usr/local/node/bin:$PATH
+fi
+
+if [ -e /usr/local/jdk ]; then
+    export PATH=/usr/local/jdk/bin:$PATH
 fi

@@ -256,11 +256,11 @@ endif
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 " 2. Automatic Installation
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+" if empty(glob('~/.vim/autoload/plug.vim'))
+"   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" endif
 
 " Specify a directory for plugins: avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
@@ -272,8 +272,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'joshdick/onedark.vim'
 
 " A powerful syntax and fuzzy completion completion engine 
-" 还需要下载clang，并手动编译, https://github.com/Valloric/YouCompleteMe
-Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --ts-completer --java-completer' }
+" https://github.com/Valloric/YouCompleteMe
+Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer' }
 
 " A tree explorer plugin for vim
 Plug 'scrooloose/nerdtree'
@@ -303,7 +303,7 @@ colorscheme onedark
 let g:airline_theme='onedark'
 
 " ycm completion config
-let g:ycm_python_binary_path = '/usr/bin/python'
+let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_warning_symbol = '->'
 let g:ycm_complete_in_comments = 1

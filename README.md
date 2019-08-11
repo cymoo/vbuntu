@@ -1,25 +1,35 @@
-# Introduction
+# Jbuntu
+
+## Intro
 
 Jbuntu is a docker image based on Ubuntu. It contains the necessary utilities and reasonable configurations.
 
 Out of the box, it has:
 
-* Vim (8.0) with a tuned configuration and plugins like One Dark theme, YouCompleteMe completion engine which offers completion for C-family language, Python, Java, JavaScript
+* Vim:
 
-* Zsh with Oh-My-Zsh
+  * tuned configurations
 
-* Git with a tuned configuration
+  * plugins: youcompleteme, nerdtree, gitgutter, onedark theme ...
 
-* Python (3.7), pip, iPython
+* Zsh with oh-my-zsh
 
-* NodeJs (12.0)
+* Git and .gitconfig
 
-* Java (12.0)
+* Python, pip, iPython
 
-* GCC: compilers
+* NodeJs (10.x)
 
-* Tree: a tool to display folder structure
+* Java (12.x)
 
-* Axel: light command line download accelerator
+* Linux man page
 
-* zip: a file compression and packaging utility
+* Build tools: gcc, make, cmake ...
+
+* Common tools: ifconfig, htop, locate, wget, curl ...
+
+## Usage
+
+```bash
+docker run -it jbuntu:0.1
+```
