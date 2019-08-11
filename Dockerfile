@@ -4,10 +4,8 @@ LABEL maintainer "Zhang Jie <me@daydream.site>"
 
 WORKDIR /root
 
-ARG NODE_VERSION="10.16.2"
 ARG NODE_URL="https://nodejs.org/dist/v10.16.2/node-v10.16.2-linux-x64.tar.xz"
 
-ARG JDK_VERSION="12.0.2"
 ARG JDK_URL="https://download.java.net/java/GA/jdk12.0.2/e482c34c86bd4bf8b56c0b35558996b9/10/GPL/openjdk-12.0.2_linux-x64_bin.tar.gz"
 
 ARG SHARED_DIR=/root/share
@@ -60,15 +58,13 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh
 RUN ["/bin/bash", "-c", "cd /usr/local \ 
     && set -o pipefail \
     && wget -O - ${NODE_URL} | tar xJf - \
-    && find . -maxdepth 1 | grep node | xargs -I {} mv {} node-${NODE_VERSION} \
-    && ln -sf node-${NODE_VERSION} node"]
+    && find . -maxdepth 1 | grep node | xargs -I {} ln -sf {} node"]
 
 # install java manually
 RUN ["/bin/bash", "-c", "cd /usr/local \ 
     && set -o pipefail \
     && wget -O - ${JDK_URL} | tar xzf - \
-    && find . -maxdepth 1 | grep jdk | xargs -I {} mv {} jdk-${JDK_VERSION} \
-    && ln -sf jdk-${JDK_VERSION} jdk"]
+    && find . -maxdepth 1 | grep jdk | xargs -I {} ln -sf {} jdk"]
 
 # install python modules
 RUN pip3 install ipython httpie tldr
