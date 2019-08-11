@@ -51,7 +51,7 @@ RUN ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone
 
 # install oh-my-zsh
-RUN sh -c "$(curl -fsSL https://raw.githuusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended \
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended \
     && echo '. ~/.bash_profile' >> ~/.zshrc
 
 # install nodejs manually
