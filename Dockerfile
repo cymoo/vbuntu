@@ -42,16 +42,16 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # copy config files
-COPY config/.gitconfig ~
-COPY config/.bash_profile ~ 
-RUN echo '. ~/.bash_profile' >> ~/.bashrc
+COPY config/.gitconfig /root/
+COPY config/.bash_profile /root/
+RUN echo '. ~/.bash_profile' >> /root/.bashrc
 
 # config time zone
 RUN ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone
 
 # install oh-my-zsh
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended \
+RUN sh -c "$(curl -fsSL https://raw.githuusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended \
     && echo '. ~/.bash_profile' >> ~/.zshrc
 
 # install nodejs manually
@@ -70,11 +70,11 @@ RUN ["/bin/bash", "-c", "cd /usr/local \
 RUN pip3 install ipython httpie tldr
 
 # config vim
-COPY config/.vimrc ~
+COPY config/.vimrc /root/
 # https://superuser.com/questions/873890/can-i-get-vim-to-install-bundles-and-close-in-the-background
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
     && vim -E -u NONE -S ~/.vimrc +PlugInstall +qall || true
-COPY config/.ycm_extra_conf.py ~/.vim
+COPY config/.ycm_extra_conf.py /root/.vim/
 
 # # compile YCM manully: https://github.com/ycm-core/YouCompleteMe
 # RUN mkdir ~/ycm_build \
