@@ -271,8 +271,7 @@ Plug 'sheerun/vim-polyglot'
 " A dark Vim/Neovim color scheme inspired by Atom's One Dark Syntax theme
 Plug 'joshdick/onedark.vim'
 
-" A powerful syntax and fuzzy completion completion engine 
-" https://github.com/Valloric/YouCompleteMe
+" A powerful syntax and fuzzy completion completion engine https://github.com/Valloric/YouCompleteMe
 Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer' }
 
 " A tree explorer plugin for vim
@@ -302,20 +301,25 @@ colorscheme onedark
 " Airline theme
 let g:airline_theme='onedark'
 
-" ycm completion config
-let g:ycm_python_binary_path = '/usr/bin/python3'
+" YCM config
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_warning_symbol = '->'
-let g:ycm_complete_in_comments = 1
-" YCM's identifier completer will seed its identifier database with the keywords
-" of the programming language you're writing
+" YCM's identifier completer will seed its identifier database with the keywords of the programming language you're writing
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_add_preview_to_completeopt = 1
-" let g:ycm_autoclose_preview_window_after_completion = 1
-" Close preview window after leaving insert mode
+let g:ycm_autoclose_preview_window_after_completion = 1
 " let g:ycm_autoclose_preview_window_after_insertion = 0
-" let g:ycm_key_invoke_completion = '<D-;>'
-let g:ycm_semantic_triggers =  {'c,cpp,python,java,go': ['re!\w{2}'], 'cs,lua,javascript': ['re!\w{2}']}
+let g:ycm_semantic_triggers =  {'c,cpp,python,java,go': ['re!\w{2}'], 'lua,javascript': ['re!\w{2}']}
+" Control which vim filetypes should ycm be turned off
+let g:ycm_filetype_blacklist = {'nerdtree': 1, 'log': 1}
+
+" Configure Python
+let g:ycm_python_interpreter_path = '/usr/bin/python3'
+let g:ycm_python_sys_path = []
+let g:ycm_extra_conf_vim_data = [
+  \  'g:ycm_python_interpreter_path',
+  \  'g:ycm_python_sys_path'
+  \]
 
 " Nerd commenter config
 " Add spaces after comment delimiters by default
