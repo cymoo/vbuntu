@@ -33,3 +33,7 @@ Out of the box, it has:
 ```bash
 docker run -it jbuntu:0.1
 ```
+
+## FixMe
+
+Completion won't be triggered unless ycmd server is restarted using :YcmRestartServer command
