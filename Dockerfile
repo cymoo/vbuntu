@@ -41,18 +41,9 @@ RUN apt-get update \
     # clean cache
     && rm -rf /var/lib/apt/lists/*
 
-# copy config files
-COPY config/.gitconfig /root/
-COPY config/.bash_profile /root/
-RUN echo '. ~/.bash_profile' >> /root/.bashrc
-
 # config time zone
 RUN ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone
-
-# install oh-my-zsh
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended \
-    && echo '. ~/.bash_profile' >> ~/.zshrc
 
 # install nodejs manually
 RUN ["/bin/bash", "-c", "cd /usr/local \ 
@@ -65,6 +56,15 @@ RUN ["/bin/bash", "-c", "cd /usr/local \
     && set -o pipefail \
     && wget -O - ${JDK_URL} | tar xzf - \
     && find . -maxdepth 1 | grep jdk | xargs -I {} ln -sf {} jdk"]
+
+# copy config files
+COPY config/.gitconfig /root/
+COPY config/.bash_profile /root/
+RUN echo '. ~/.bash_profile' >> /root/.bashrc
+
+# install oh-my-zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended \
+    && echo '. ~/.bash_profile' >> ~/.zshrc
 
 # install python modules
 RUN pip3 install ipython httpie tldr
