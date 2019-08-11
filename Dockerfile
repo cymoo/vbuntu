@@ -57,18 +57,18 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh
     && echo '. ~/.bash_profile' >> ~/.zshrc
 
 # install nodejs manually
-RUN cd /usr/local \
+RUN ["/bin/bash", "-c", "cd /usr/local \ 
     && set -o pipefail \
     && wget -O - ${NODE_URL} | tar xJf - \
     && find . -maxdepth 1 | grep node | xargs -I {} mv {} node-${NODE_VERSION} \
-    && ln -sf node-${NODE_VERSION} node
+    && ln -sf node-${NODE_VERSION} node"]
 
 # install java manually
-RUN cd /usr/local \
+RUN ["/bin/bash", "-c", "cd /usr/local \ 
     && set -o pipefail \
     && wget -O - ${JDK_URL} | tar xzf - \
-    && find . -maxdepth 1 | grep jdk | xargs -I {} mv {} jdk-${NODE_VERSION} \
-    && ln -sf jdk-${JDK_VERSION} jdk
+    && find . -maxdepth 1 | grep jdk | xargs -I {} mv {} jdk-${JDK_VERSION} \
+    && ln -sf jdk-${JDK_VERSION} jdk"]
 
 # install python modules
 RUN pip3 install ipython httpie tldr
