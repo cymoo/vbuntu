@@ -6,9 +6,9 @@ WORKDIR /root
 
 ARG NODE_URL="https://nodejs.org/dist/v10.16.2/node-v10.16.2-linux-x64.tar.xz"
 
-ARG JDK_URL="https://download.java.net/java/GA/jdk12.0.2/e482c34c86bd4bf8b56c0b35558996b9/10/GPL/openjdk-12.0.2_linux-x64_bin.tar.gz"
+ARG PYPI_URL="https://pypi.tuna.tsinghua.edu.cn/simple"
 
-ARG SHARED_DIR=/root/share
+ARG SHARED_DIR=/root/work
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -17,9 +17,20 @@ ARG TZ="Asia/Shanghai"
 ENV LANG C.UTF-8
 ENV TZ ${TZ}
 
+# replace default sources.list
+# COPY config/sources.list /etc/apt/
+
+# Do not exclude man pages & other documentation
+RUN rm /etc/dpkg/dpkg.cfg.d/excludes
+
+# Reinstall all currently installed packages in order to get the man pages back
+RUN apt-get update \
+    && dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install -y --reinstall \
+    && rm -r /var/lib/apt/lists/*
+
 RUN apt-get update \
     # unminimize, https://github.com/tianon/docker-brew-ubuntu-core/issues/122
-    && yes | unminimize \
+    # && yes | unminimize \
     # RTFM
     && apt-get install -y man-db \
     # apt-utils
@@ -31,7 +42,7 @@ RUN apt-get update \
     # common tools
     && apt-get install -y net-tools iputils-ping htop tree zip locate \
     # dev tools
-    && apt-get install -y build-essential make cmake git sqlite3 \
+    && apt-get install -y build-essential make cmake git \
     # zsh
     && apt-get install -y zsh \
     # vim
@@ -46,16 +57,10 @@ RUN ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone
 
 # install nodejs manually
-RUN ["/bin/bash", "-c", "cd /usr/local \ 
+RUN [ "/bin/bash", "-c", "cd /usr/local \ 
     && set -o pipefail \
     && wget -O - ${NODE_URL} | tar xJf - \
-    && find . -maxdepth 1 | grep node | xargs -I {} ln -sf {} node"]
-
-# install java manually
-RUN ["/bin/bash", "-c", "cd /usr/local \ 
-    && set -o pipefail \
-    && wget -O - ${JDK_URL} | tar xzf - \
-    && find . -maxdepth 1 | grep jdk | xargs -I {} ln -sf {} jdk"]
+    && find . -maxdepth 1 | grep node | xargs -I {} ln -sf {} node" ]
 
 # copy config files
 COPY config/.gitconfig /root/
@@ -67,14 +72,16 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh
     && echo '. ~/.bash_profile' >> ~/.zshrc
 
 # install python modules
-RUN pip3 install ipython httpie tldr
+RUN pip3 install -i ${PYPI_URL} ipython httpie tldr --no-cache-dir
 
 # config vim
 COPY config/.vimrc /root/
 # https://superuser.com/questions/873890/can-i-get-vim-to-install-bundles-and-close-in-the-background
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
-    && vim -E -u NONE -S ~/.vimrc +PlugInstall +qall || true
-COPY config/.ycm_extra_conf.py /root/.vim/
+    && vim -E -u NONE -S ~/.vimrc +PlugInstall +qall || true \
+    && echo 'hello'
+
+COPY config/.ycm_extra_conf.py /root/
 
 # # compile YCM manully: https://github.com/ycm-core/YouCompleteMe
 # RUN mkdir ~/ycm_build \

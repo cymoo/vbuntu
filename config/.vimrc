@@ -272,7 +272,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'joshdick/onedark.vim'
 
 " A powerful syntax and fuzzy completion completion engine https://github.com/Valloric/YouCompleteMe
-Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer' }
+Plug 'valloric/youcompleteme', { 'do': './install.py --clang-completer --ts-completer' }
 
 " A tree explorer plugin for vim
 Plug 'scrooloose/nerdtree'
@@ -302,7 +302,7 @@ colorscheme onedark
 let g:airline_theme='onedark'
 
 " YCM config
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_warning_symbol = '->'
 " YCM's identifier completer will seed its identifier database with the keywords of the programming language you're writing
 let g:ycm_seed_identifiers_with_syntax = 1

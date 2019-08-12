@@ -23,7 +23,8 @@ flags = [
 '-x', 'c',
 '-std=c11',
 # '-I', '/path/to/header',
-# '-isystem', '/usr/local/include'
+'-isystem', '/usr/include',
+'-isystem', '/usr/local/include'
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the

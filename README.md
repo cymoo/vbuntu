@@ -1,8 +1,8 @@
-# Jbuntu
+# Vbuntu
 
 ## Intro
 
-Jbuntu is a docker image based on Ubuntu. It contains the necessary utilities and reasonable configurations.
+Vbuntu is a docker image based on Ubuntu. It contains the necessary utilities and reasonable configurations.
 
 Out of the box, it has:
 
@@ -20,8 +20,6 @@ Out of the box, it has:
 
 * NodeJs (10.x)
 
-* Java (12.x)
-
 * Linux man page
 
 * Build tools: gcc, make, cmake ...
@@ -31,7 +29,7 @@ Out of the box, it has:
 ## Usage
 
 ```bash
-docker run -it jbuntu:0.1
+docker run -it vbuntu:0.1
 ```
 
 ## FixMe
