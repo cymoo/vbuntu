@@ -77,9 +77,10 @@ RUN pip3 install -i ${PYPI_URL} ipython httpie tldr --no-cache-dir
 # config vim
 COPY config/.vimrc /root/
 # https://superuser.com/questions/873890/can-i-get-vim-to-install-bundles-and-close-in-the-background
-RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
-    && vim -E -u NONE -S ~/.vimrc +PlugInstall +qall || true \
-    && echo 'hello'
+RUN ln -sf /usr/local/node/bin/npm /usr/bin/npm \
+    && ln -sf /usr/local/node/bin/node /usr/bin/node \
+    && curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim \
+    && vim -E -u NONE -S ~/.vimrc +PlugInstall +qall || true
 
 COPY config/.ycm_extra_conf.py /root/
 
@@ -94,4 +95,4 @@ VOLUME [ "${SHARED_DIR}" ]
 
 ENV TERM=xterm-256color
 
-CMD [ "/usr/bin/zsh" ]
+CMD [ "/usr/bin/zsh"]
