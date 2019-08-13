@@ -14,24 +14,26 @@ Out of the box, it has:
 
 * Zsh with oh-my-zsh
 
-* Git and .gitconfig
+* Git
 
-* Python, pip, iPython
+* Python(2.7 and 3.6), pip, iPython
 
 * NodeJs (10.x)
 
-* Linux man page
+* Linux man pages
 
 * Build tools: gcc, make, cmake ...
 
-* Common tools: ifconfig, htop, locate, wget, curl ...
+* Common tools: ifconfig, htop, locate, wget, curl, bat...
 
 ## Usage
 
 ```bash
-docker run -it vbuntu:0.1
+docker run -it vbuntu
 ```
 
-## FixMe
+## Freq
 
-Vim YCM completion engine won't be triggered unless ycmd server is restarted using :YcmRestartServer command
+### Why vim completion does not work
+
+This may happen rarely and can be fixed easily by using command: YcmRestartServer
