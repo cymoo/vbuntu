@@ -73,6 +73,7 @@ RUN [ "/bin/bash", "-c", "cd /usr/local \
     && find . -maxdepth 1 | grep node | xargs -I {} ln -sf {} node" ]
 
 # install oh-my-zsh
+COPY config/.gitconfig /root/
 COPY config/.bash_profile /root/
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended \
     && echo '. ~/.bash_profile' >> ~/.zshrc \
@@ -96,9 +97,6 @@ COPY config/.ycm_extra_conf.py /root/
 #     && cmake -G "Unix Makefiles" -DPATH_TO_LLVM_ROOT=/path/to/llvm . ~/.vim/plugged/youcompleteme/third_party/ycmd/cpp \
 #     && cmake --build . --target ycm_core \ 
 #     && rm -rf ~/ycm_build
-
-# miscs
-COPY config/.gitconfig /root/
 
 # create index db for locate(1)
 RUN updatedb
